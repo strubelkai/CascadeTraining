@@ -40,10 +40,13 @@ h3 {
   color: #202123;
   margin: 16px 0 40px;
 }
+.strava-container{
+  float: left;
+  padding: 20px;
+}
 
 .chat-container {
   max-width: 600px;
-  width: 100%;
   margin: 0 auto;
   padding-top: 20px;
   display: flex;
@@ -319,12 +322,12 @@ input[type="text"] {
 table {
   border-spacing: 1em 0.5em;
   padding: 0 2em 1em 0;
-  border: 1px solid orange;
+  border: 1px solid grey;
 }
 
 td {
-  width: 6em;
   height: 1em;
   text-align: center;
   vertical-align: middle;
 }
+

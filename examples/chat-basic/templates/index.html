@@ -8,6 +8,7 @@
     />
   </head>
   <body>
+    
     <div class="header">
       <img
         src="{{ url_for('static', filename='icon.png') }}"
@@ -15,7 +16,8 @@
       />
       <div class="demo-text">Strava Coach</div>
     </div>
-    <div class="container" >
+
+    <div class="strava-container" >
       <table id="strava-data" class="table">
         <thead>
           <tr>
@@ -62,6 +64,7 @@
         </div>
       </form>
     </div>
+  
     <script>
       document
         .querySelector("form")
