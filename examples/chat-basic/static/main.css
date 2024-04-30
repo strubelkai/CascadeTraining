@@ -49,7 +49,7 @@ h3 {
 .chat-container {
   max-width: 600px;
   margin: 0 auto;
-  padding-top: 20px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -296,6 +296,16 @@ input[type="text"] {
   font-weight: bold;
 }
 
+.main-content {
+  display: flex;
+  flex-direction: row; /* Align children (file upload section and chat container) horizontally */
+  height: 100vh; /* Adjust height based on header height */
+  overflow: auto; /* Allow scrolling within this container */
+  align-items: stretch;
+}
+
+
+
 .message-role {
   align-self: flex-start;
   font-size: 12pt;
@@ -324,6 +334,27 @@ table {
   border-spacing: 1em 0.5em;
   padding: 0 2em 1em 0;
   border: 1px solid grey;
+}
+
+td {
+  height: 1em;
+  text-align: center;
+  vertical-align: middle;
+}
+.training-log-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around; /* Adjust content distribution */
+  align-items: center; /* Center content horizontally */
+  padding: 20px;
+  box-sizing: border-box;
+  border-right: 1px solid #c5c5d2; /* Optional: border to separate from the chat section */
+}
+
+
+table {
+  border-spacing: 1em 0.5em;
+  padding: 0 2em 1em 0;
 }
 
 td {

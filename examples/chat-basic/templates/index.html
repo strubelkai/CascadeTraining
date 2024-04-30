@@ -9,15 +9,17 @@
   </head>
   <body>
     
-    <div class="header">
-      <img
-        src="{{ url_for('static', filename='icon.png') }}"
-        alt="OpenAI Logo"
-      />
-      <div class="demo-text">Strava Coach</div>
-    </div>
-    <div class="container">
+
+    <div class="main-content">
+      
       <div class="training-log-container" >
+        <div class="header">
+          <img
+            src="{{ url_for('static', filename='icon.png') }}"
+            alt="OpenAI Logo"
+          />
+          <div class="demo-text">Strava Coach</div>
+        </div>
         <table id="strava-data" class="table">
           <thead>
             <tr>
@@ -40,32 +42,34 @@
           </tbody>
         </table>
       </div>
-    </div>
-    <div class="chat-container">
-      {% for message in chat_history %}
-      <div class="message-role {{ 'user' if message.role == 'user' else '' }}">
-        {{ message.role.capitalize() }}
-      </div>
-      <div
-        class="{{ 'user-message' if message.role == 'user' else 'assistant-message' }}"
-      >
-        {{ message.content }}
-      </div>
-      {% endfor %}
-    </div>
-    <div class="message-input-container">
-      <form action="/chat" method="post">
-        <textarea
-          name="message"
-          placeholder="Type your message here..."
-          required
-        ></textarea>
-        <div class="button-group">
-          <button type="submit" id="send-btn">&#x2191;</button>
-        </div>
-      </form>
-    </div>
   
+      <div class="chat-container">
+    
+        {% for message in chat_history %}
+        <div class="message-role {{ 'user' if message.role == 'user' else '' }}">
+          {{ message.role.capitalize() }}
+        </div>
+        <div
+          class="{{ 'user-message' if message.role == 'user' else 'assistant-message' }}"
+        >
+          {{ message.content }}
+        </div>
+        {% endfor %}
+      </div>
+      <div class="message-input-container">
+        <form action="/chat" method="post">
+          <textarea
+            name="message"
+            placeholder="Type your message here..."
+            required
+          ></textarea>
+          <div class="button-group">
+            <button type="submit" id="send-btn">&#x2191;</button>
+          </div>
+        </form>
+      </div>
+  
+    </div>
     <script>
       document
         .querySelector("form")
