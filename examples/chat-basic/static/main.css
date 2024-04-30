@@ -40,7 +40,8 @@ h3 {
   color: #202123;
   margin: 16px 0 40px;
 }
-.strava-container{
+.training-log-container{
+  max-width: 600px;
   float: left;
   padding: 20px;
 }

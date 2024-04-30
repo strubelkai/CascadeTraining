@@ -32,7 +32,7 @@ def getStravaData():
         if (date > date_past):
             summary = {
                 "Activity":str(d['sport_type']), 
-                "Date":str(d['start_date']), 
+                "Date":str(date.strftime("%m/%d, %H:%M")), 
                 "Description":str(d['name']), 
                 "Distance (KM)":str(round(d['distance']/1000,2))
             }

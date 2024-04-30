@@ -16,29 +16,30 @@
       />
       <div class="demo-text">Strava Coach</div>
     </div>
-
-    <div class="strava-container" >
-      <table id="strava-data" class="table">
-        <thead>
-          <tr>
-            <th>Activity</th>
-            <th>Date</th>
-            <th>Name</th>
-            <th>Distance</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for activity in activities %}
-          
+    <div class="container">
+      <div class="training-log-container" >
+        <table id="strava-data" class="table">
+          <thead>
             <tr>
-              <td>{{ activity.Activity }}</td>
-              <td>{{ activity.Date }}</td>
-              <td>{{ activity.Description }}</td>
-              <td>{{ activity['Distance (KM)'] }}</td>
+              <th>Activity</th>
+              <th>Date</th>
+              <th>Name</th>
+              <th>Distance (KM)</th>
             </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {% for activity in activities %}
+            
+              <tr>
+                <td>{{ activity.Activity }}</td>
+                <td>{{ activity.Date }}</td>
+                <td>{{ activity.Description }}</td>
+                <td>{{ activity['Distance (KM)'] }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
     <div class="chat-container">
       {% for message in chat_history %}
