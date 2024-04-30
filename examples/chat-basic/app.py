@@ -7,15 +7,19 @@ from flask import (
     jsonify,
 )
 import openai
+import strava_api
 
 client = openai.OpenAI()
+print("Getting activities")
+strava_data = str(strava_api.getStravaData())
+print(strava_data)
 
 app = Flask(__name__)
 
 chat_history = [
-    {"role": "system", "content": "You are a helpful assistant."},
+    {"role": "system", "content": "Hi! I am your personal trainer."},
+    {"role": "user", "content": str("Here's my training log for the last month: "+strava_data)},
 ]
-
 
 @app.route("/", methods=["GET"])
 def index():
@@ -58,5 +62,5 @@ def stream():
 @app.route("/reset", methods=["POST"])
 def reset_chat():
     global chat_history
-    chat_history = [{"role": "system", "content": "You are a helpful assistant."}]
+    chat_history = [{"role": "system", "content": "You are a personal trainer."}]
     return jsonify(success=True)
