@@ -315,3 +315,16 @@ input[type="text"] {
   justify-content: center;
   align-items: center;
 }
+
+table {
+  border-spacing: 1em 0.5em;
+  padding: 0 2em 1em 0;
+  border: 1px solid orange;
+}
+
+td {
+  width: 6em;
+  height: 1em;
+  text-align: center;
+  vertical-align: middle;
+}

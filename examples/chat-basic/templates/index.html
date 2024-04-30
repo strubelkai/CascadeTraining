@@ -13,7 +13,30 @@
         src="{{ url_for('static', filename='icon.png') }}"
         alt="OpenAI Logo"
       />
-      <div class="demo-text">Demo</div>
+      <div class="demo-text">Strava Coach</div>
+    </div>
+    <div class="container" >
+      <table id="strava-data" class="table">
+        <thead>
+          <tr>
+            <th>Activity</th>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Distance</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for activity in activities %}
+          
+            <tr>
+              <td>{{ activity.Activity }}</td>
+              <td>{{ activity.Date }}</td>
+              <td>{{ activity.Description }}</td>
+              <td>{{ activity['Distance (KM)'] }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
     <div class="chat-container">
       {% for message in chat_history %}

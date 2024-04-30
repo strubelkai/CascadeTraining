@@ -11,19 +11,19 @@ import strava_api
 
 client = openai.OpenAI()
 print("Getting activities")
-strava_data = str(strava_api.getStravaData())
+strava_data = strava_api.getStravaData()
 print(strava_data)
 
 app = Flask(__name__)
 
 chat_history = [
     {"role": "system", "content": "Hi! I am your personal trainer."},
-    {"role": "user", "content": str("Here's my training log for the last month: "+strava_data)},
+    {"role": "system", "content": str("Here's your training log for the last month: "+str(strava_data))},
 ]
 
 @app.route("/", methods=["GET"])
 def index():
-    return render_template("index.html", chat_history=chat_history)
+    return render_template("index.html", chat_history=chat_history, activities=strava_data)
 
 
 @app.route("/chat", methods=["POST"])
