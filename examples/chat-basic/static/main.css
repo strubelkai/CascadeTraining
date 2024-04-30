@@ -284,6 +284,7 @@ input[type="text"] {
   background-color: white;
   width: 100%; /* Ensure the header spans the full width */
   padding: 10px 0; /* Add some vertical padding */
+
 }
 
 .header img {
@@ -344,7 +345,7 @@ td {
 .training-log-container{
   display: flex;
   flex-direction: column;
-  justify-content: space-around; /* Adjust content distribution */
+/* Adjust content distribution */
   align-items: center; /* Center content horizontally */
   padding: 20px;
   box-sizing: border-box;
