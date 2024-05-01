@@ -16,14 +16,27 @@ print(strava_data)
 
 app = Flask(__name__)
 
+plans = [
+    {'Day': 'M', 'Activity': 'Bike or Swim',  'Details': '45 min'},
+    {'Day': 'Tu', 'Activity': 'Run and Chest/Tris',  'Details': '5k'},
+    {'Day': 'W', 'Activity': 'Swim and Back/Bis',  'Details': '5x200M 30\"'},
+    {'Day': 'Th', 'Activity': 'Bike',  'Details': '45 min'},
+    {'Day': 'F', 'Activity': 'Swim and Shoulders/Abs',  'Details': '1x500M 2\' and 5x100M 20\"'},
+    {'Day': 'Sa', 'Activity': 'Run',  'Details': '10k'},
+    {'Day': 'Su', 'Activity': 'Legs',  'Details': '45 min'},
+]
+
 chat_history = [
     {"role": "system", "content": "Hi! I am your personal trainer."},
-    {"role": "system", "content": str("Here's your training log for the last month: "+str(strava_data))},
+    {"role": "system", "content": str("Here's your training log for the last two weeks: "+str(strava_data))},
+    {"role": "system", "content": str("Here's your training block for the next week: "+str(plans))},
 ]
+
+
 
 @app.route("/", methods=["GET"])
 def index():
-    return render_template("index.html", chat_history=chat_history, activities=strava_data)
+    return render_template("index.html", chat_history=chat_history, activities=strava_data, plans=plans)
 
 
 @app.route("/chat", methods=["POST"])

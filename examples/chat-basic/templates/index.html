@@ -18,7 +18,7 @@
             src="{{ url_for('static', filename='icon.png') }}"
             alt="OpenAI Logo"
           />
-          <div class="demo-text">Strava Coach</div>
+          <div class="demo-text">Strava Results (Previous 2 Weeks)</div>
         </div>
         <table id="strava-data" class="table">
           <thead>
@@ -37,6 +37,31 @@
                 <td>{{ activity.Date }}</td>
                 <td>{{ activity.Description }}</td>
                 <td>{{ activity['Distance (KM)'] }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <div class="header">
+          <img
+            src="{{ url_for('static', filename='icon.png') }}"
+            alt="OpenAI Logo"
+          />
+          <div class="demo-text">Upcoming Training Block (Upcoming Week)</div>
+        </div>
+        <table id="strava-data" class="table">
+          <thead>
+            <tr>
+              <th>Day</th>
+              <th>Activity</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in plans %}
+              <tr>
+                <td>{{ p.Day }}</td>
+                <td>{{ p.Activity }}</td>
+                <td>{{ p.Details }}</td>
               </tr>
             {% endfor %}
           </tbody>

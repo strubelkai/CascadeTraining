@@ -28,7 +28,7 @@ def getStravaData():
         date = datetime.fromisoformat(
             d['start_date'][:-1]
         )
-        date_past = datetime.now() - timedelta(days=31)
+        date_past = datetime.now() - timedelta(days=14)
         if (date > date_past):
             summary = {
                 "Activity":str(d['sport_type']), 

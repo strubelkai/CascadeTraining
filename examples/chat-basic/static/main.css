@@ -331,27 +331,15 @@ input[type="text"] {
   align-items: center;
 }
 
-table {
-  border-spacing: 1em 0.5em;
-  padding: 0 2em 1em 0;
-  border: 1px solid grey;
-}
 
-td {
-  height: 1em;
-  text-align: center;
-  vertical-align: middle;
-}
 .training-log-container{
   display: flex;
   flex-direction: column;
-/* Adjust content distribution */
   align-items: center; /* Center content horizontally */
   padding: 20px;
   box-sizing: border-box;
   border-right: 1px solid #c5c5d2; /* Optional: border to separate from the chat section */
 }
-
 
 table {
   border-spacing: 1em 0.5em;
