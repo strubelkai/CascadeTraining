@@ -12,9 +12,8 @@ import strava_api
 from datetime import datetime, time, date, timezone, timedelta
 
 client = openai.OpenAI()
-print("Getting activities")
-strava_data = strava_api.getStravaData()
-print(strava_data)
+strava_data = strava_api.getStravaData(7)
+#print(strava_data)
 #str(date.strftime("%m/%d, %H:%M"))
 
 app = Flask(__name__)
@@ -32,7 +31,7 @@ plans = [
 chat_history = [
     {"role": "system", "content": "Hi! I am your personal trainer."},
     {"role": "system", "content": str("Here's your training block for the next week: "+str(plans))},
-    {"role": "system", "content": str("Here's your training log for the last two weeks: "+str(strava_data))},   
+    {"role": "system", "content": str("Here's your training log for the last week: "+str(strava_data))},   
 ]
 
 @app.route("/", methods=["GET"])
@@ -43,13 +42,14 @@ def index():
 def return_data():
     start_date = request.args.get('start', '')
     end_date = request.args.get('end', '')
-    strava_workouts = []
+    workouts = []
+    strava_data = strava_api.getStravaData(90)
     for data in strava_data:
             workout = {
                 "title":data['Activity'], 
                 "start":data['Date'], 
             }
-            strava_workouts.append(workout)
+            workouts.append(workout)
     n=0
     today = date.today()
     previousMonday = today + timedelta(days=-today.weekday())
@@ -59,13 +59,11 @@ def return_data():
                 "start":str(previousMonday+timedelta(days=n))
             }
             n+=1
-            strava_workouts.append(workout)
-    print(strava_workouts)
-    return strava_workouts
+            workouts.append(workout)
+    return workouts
 
 @app.route("/calendar")
 def calendar():
-
     return render_template("calendar.html")
 
 

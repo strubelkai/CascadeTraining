@@ -1,7 +1,6 @@
 import requests
 import os
-from datetime import datetime, time
-from datetime import timezone, timedelta
+from datetime import datetime, time, date, timezone, timedelta
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -16,7 +15,7 @@ payload={
         'f': 'json'
 }
 
-def getStravaData():
+def getStravaData(days):
     res = requests.post(auth_url, data=payload, verify=False)
     access_token = res.json()['access_token']
 
@@ -28,7 +27,7 @@ def getStravaData():
         date = datetime.fromisoformat(
             d['start_date'][:-1]
         )
-        date_past = datetime.now() - timedelta(days=14)
+        date_past = datetime.now() - timedelta(days=days)
         if (date > date_past):
             summary = {
                 "Activity":str(d['sport_type']), 
