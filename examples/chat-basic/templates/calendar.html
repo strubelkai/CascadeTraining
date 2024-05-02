@@ -1,8 +1,7 @@
-<!DOCTYPE html>
-<html lang='en'>
-  <head>
-    <meta charset='utf-8' />
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
+{% extends "base.html" %}
+{% block title %}Training Log{% endblock %}
+{% block head %}
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
     <script>
 
       document.addEventListener('DOMContentLoaded', function() {
@@ -20,9 +19,14 @@
       });
 
     </script>
-  </head>
-  <body>
-    <a href="/" class="button"><button>Chat with Coach</button></a>
-    <div id='calendar'></div>
-  </body>
-</html>
+  {{ super() }}
+  <style type="text/css">
+    .important { color: #336699; }
+  </style>
+{% endblock %}
+{% block content %}
+
+<div class="container">
+   <div id='calendar'></div>
+</div>
+{% endblock %}

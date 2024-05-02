@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Plan{% endblock %}
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+ 
+  <style type="text/css">
+    .important { color: #336699; }
+  </style>
+{% endblock %}
+{% block content %}
+
+<div class="container">
+  <table id="strava-data" class="table">
+    <thead>
+      <tr>
+        <th>Sport</th>
+        <th>Monday</th>
+        <th>Tuesday</th>
+        <th>Wednesday</th>
+        <th>Thursday</th>
+        <th>Friday</th>
+        <th>Saturday</th>
+        <th>Sunday</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in plans %}
+        <tr>
+          {% for d in p %}
+          <td>{{ d }}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,14 +1,16 @@
-<!doctype html>
-<html>
-  <head>
-    <title>OpenAI Chat</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='main.css') }}"
-    />
-  </head>
-  <body>
-    
+{% extends "base.html" %}
+{% block title %}Index{% endblock %}
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+ 
+  {{ super() }}
+  <style type="text/css">
+    .important { color: #336699; }
+  </style>
+{% endblock %}
+{% block content %}
+
+
 
     <div class="main-content">
       <div class="training-log-container" >
@@ -43,7 +45,6 @@
             alt="OpenAI Logo"
           />
           <div class="demo-text">Strava Results (Previous Week)
-            <a href="/calendar" class="button"><button>Training Log</button></a>
           </div>
         </div>
         <table id="strava-data" class="table">
@@ -199,5 +200,5 @@
           });
         });
     </script>
-  </body>
-</html>
+
+{% endblock %}
