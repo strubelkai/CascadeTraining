@@ -23,11 +23,7 @@ input {
   font-family: "ColfaxAI", Helvetica, sans-serif;
 }
 
-body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+
 
 .icon {
   width: 34px;
@@ -81,16 +77,18 @@ h3 {
 .message-input-container {
   position: fixed;
   bottom: 0;
-  left: 0;
-  right: 0;
+  width: 100%; 
+  max-width: 600px;
   padding: 20px;
   background: #fff;
   display: flex;
   justify-content: center;
+  flex-direction: column;
   height: auto;
   box-sizing: border-box;
   align-items: start;
 }
+
 
 .message-input-container form {
   display: flex; /* Use flexbox to layout children */

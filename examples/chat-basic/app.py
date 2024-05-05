@@ -68,7 +68,6 @@ def calendar():
 
 @app.route("/plan")
 def plan():
-    
     swim = ["Swim", 0,0,'5x200M 30\"',0,'1x500M 2\' and 5x100M 20\"',0,0]
     run = ["Run", 0,"5k",0,0,0,'10k',0]
     bike  = ["Bike", "45min",0,0,'45min',0,0,0]
