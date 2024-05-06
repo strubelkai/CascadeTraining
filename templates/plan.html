@@ -9,6 +9,7 @@
 {% endblock %}
 {% block content %}
 
+
 <div class="container">
   <table id="strava-data" class="table">
     <thead>
@@ -33,5 +34,31 @@
       {% endfor %}
     </tbody>
   </table>
+
+
+ <table id="planned-activities" class="table">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Activity</th>
+      <th>Description</th>
+      <th>Distance (KM)</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for activity in activities %}
+      <tr>
+        <td>{{ activity.Date }}</td>
+        <td>{{ activity.Activity }}</td>
+        <td>{{ activity.Description }}</td>
+        <td>{{ activity['Distance (KM)'] }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% include "activityForm.html" %}   
+
+
 </div>
 {% endblock %}

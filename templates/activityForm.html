@@ -1,0 +1,36 @@
+<div class="container">
+    <form action="/plan" METHOD="POST">
+      <div class="form-group">
+        <div class="form-group col-md-10">
+          <label class="col-sm-2 col-form-label">Name</label>
+          <input type="text" id="name" placeholder="Name ...">
+        </div>
+        <div class="form-group col-md-10">
+          <label class="col-sm-2 col-form-label">Type</label>
+          <select class="form-control" id="type">
+            <option>Run</option>
+            <option>Ride</option>
+            <option>Swim</option>
+            <option>WeightTraining</option>
+          </select>
+        </div>
+        <div class="form-group col-md-10">
+          <label class="col-sm-2 col-form-label">Description</label>
+          <input type="text" id="description" placeholder="description ...">
+        </div>
+        <div class="form-group col-md-10">
+          <label class="col-sm-2 col-form-label">Date</label>
+          <input type="date" id="start_date_local" placeholder="Date ...">
+        </div>
+        <div class="form-group col-md-10">
+          <label class="col-sm-2 col-form-label">Time</label>
+          <input type="number" id="elapsed_time" placeholder="Time ...">
+        </div>
+        <div class="form-group col-md-10">
+          <label class="col-sm-2 col-form-label">Distance</label>
+          <input type="float" id="distance" placeholder="distance ...">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Add Activity</button>
+   </form>
+  </div>
