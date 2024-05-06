@@ -10,27 +10,27 @@
 {% endblock %}
 {% block content %}
 
-
-
     <div class="main-content">
       <div class="training-log-container" >
         <div class="header">
-          <div class="demo-text">Upcoming Training Block (Upcoming Week)</div>
+          <div class="demo-text">Current Training Block (This Week)</div>
         </div>
         <table id="strava-data" class="table">
           <thead>
             <tr>
-              <th>Day</th>
+              <th>Date</th>
               <th>Activity</th>
-              <th>Details</th>
+              <th>Description</th>
+              <th>Distance (KM)</th>
             </tr>
           </thead>
           <tbody>
             {% for p in plans %}
               <tr>
-                <td>{{ p.Day }}</td>
+                <td>{{ p.Date }}</td>
                 <td>{{ p.Activity }}</td>
-                <td>{{ p.Details }}</td>
+                <td>{{ p.Description }}</td>
+                <td>{{ p['Distance (KM)'] }}</td>
               </tr>
             {% endfor %}
           </tbody>
@@ -42,18 +42,17 @@
         <table id="strava-data" class="table">
           <thead>
             <tr>
-              <th>Activity</th>
               <th>Date</th>
-              <th>Name</th>
+              <th>Activity</th>
+              <th>Description</th>
               <th>Distance (KM)</th>
             </tr>
           </thead>
           <tbody>
             {% for activity in activities %}
-            
               <tr>
-                <td>{{ activity.Activity }}</td>
                 <td>{{ activity.Date }}</td>
+                <td>{{ activity.Activity }}</td>
                 <td>{{ activity.Description }}</td>
                 <td>{{ activity['Distance (KM)'] }}</td>
               </tr>

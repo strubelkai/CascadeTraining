@@ -36,7 +36,7 @@ def getStravaData(days):
                 "Distance (KM)":str(round(d['distance']/1000,2))
             }
             activity_list.append(summary)
-    return activity_list
+    return list(reversed(activity_list))
 
 if __name__ == '__main__':
     getStravaData()
