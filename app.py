@@ -14,6 +14,9 @@ import planner
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate  
 from datetime import datetime, time, date, timezone, timedelta
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 client = openai.OpenAI()
 strava_data = strava_api.getStravaData(14)
@@ -42,6 +45,17 @@ chat_history = [
 @app.route("/", methods=["GET"])
 def index():
     return render_template("index.html", chat_history=chat_history, activities=strava_data, plans=plans)
+
+@app.route("/signup", methods=["GET"])
+def sign_up():
+    OAuthURL = "http://www.strava.com/oauth/authorize?client_id="+ os.getenv('CLIENT_ID') + "&response_type=code&redirect_uri=http://127.0.0.1:5000/exchange_token&approval_prompt=force&scope=read,activity:read_all"
+    return redirect(OAuthURL)
+
+@app.route("/exchange_token")
+def exchange_token():
+    code = request.args.get('code')
+    return strava_api.getRefreshToken(code)
+   
 
 @app.route("/activities/<int:activity_id>", methods=["GET"])
 def activities(activity_id):
