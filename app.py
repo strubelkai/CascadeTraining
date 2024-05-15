@@ -16,7 +16,7 @@ from flask_migrate import Migrate
 from datetime import datetime, time, date, timezone, timedelta
 
 client = openai.OpenAI()
-strava_data = strava_api.getStravaData(7)
+strava_data = strava_api.getStravaData(14)
 #print(strava_data)
 #str(date.strftime("%m/%d, %H:%M"))
 plans = planner.getPlans()
@@ -34,14 +34,25 @@ with app.app_context():
     print("Success")
 
 chat_history = [
-    {"role": "system", "content": "Hi! I am your personal trainer."},
-    {"role": "system", "content": str("Here's your current training block: "+str(plans))},
-    {"role": "system", "content": str("Here's your training log for the last week: "+str(strava_data))},   
+    {"role": "system", "content": "Hey there, I'm Lionel Sanders. You might know me as a professional triathlete, but today, I'm here to be your coach, your mentor, and your biggest supporter. I've been through the trenches, battled my demons, and come out on top, and now, I'm here to share everything I've learned with you."},
+    # {"role": "system", "content": str("Here's your current training block: "+str(plans))},
+    {"role": "system", "content": str("Here's your training log for the last two weeks: "+str(strava_data))},  
 ]
 
 @app.route("/", methods=["GET"])
 def index():
     return render_template("index.html", chat_history=chat_history, activities=strava_data, plans=plans)
+
+@app.route("/activities/<int:activity_id>", methods=["GET"])
+def activities(activity_id):
+    Activity = strava_api.getStravaActivites(activity_id)
+    chat_history = [
+        {"role": "system", "content": "Hey there, I'm Lionel Sanders. You might know me as a professional triathlete, but today, I'm here to be your coach, your mentor, and your biggest supporter. I've been through the trenches, battled my demons, and come out on top, and now, I'm here to share everything I've learned with you."},
+        # {"role": "system", "content": str("Here's your current training block: "+str(plans))},
+        {"role": "system", "content": str("Let's look at just one activity: "+str(Activity))},   
+    ]
+    return render_template("activity.html", chat_history=chat_history, activity=Activity)
+
 
 @app.route('/data')
 def return_data():
@@ -55,17 +66,17 @@ def return_data():
                 "start":data['Date'], 
             }
             workouts.append(workout)
-    n=0
-    today = date.today()
-    previousMonday = today + timedelta(days=-today.weekday())
-    plans = planner.getPlans()
-    for p in plans:
-            workout = {
-                "title":p['Activity'], 
-                "start":str(previousMonday+timedelta(days=n))
-            }
-            n+=1
-            workouts.append(workout)
+    # n=0
+    # today = date.today()
+    # previousMonday = today + timedelta(days=-today.weekday())
+    # plans = planner.getPlans()
+    # for p in plans:
+    #         workout = {
+    #             "title":p['Activity'], 
+    #             "start":str(previousMonday+timedelta(days=n))
+    #         }
+    #         n+=1
+    #         workouts.append(workout)
     return workouts
 
 @app.route("/calendar")
@@ -73,36 +84,36 @@ def calendar():
     return render_template("calendar.html")
 
 
-@app.route("/plan", methods=["POST", "GET"])
-def plan():
-    swim = ["Swim", 0,0,'5x200M 30\"',0,'1x500M 2\' and 5x100M 20\"',0,0]
-    run = ["Run", 0,"5k",0,0,0,'10k',0]
-    bike  = ["Bike", "45min",0,0,'45min',0,0,0]
-    strength = ["Strength", 0,"Chest and Tris","Back and Bis",0,0,0,"Legs"]
-    plans = [swim, run, bike, strength]
+# @app.route("/plan", methods=["POST", "GET"])
+# def plan():
+#     swim = ["Swim", 0,0,'5x200M 30\"',0,'1x500M 2\' and 5x100M 20\"',0,0]
+#     run = ["Run", 0,"5k",0,0,0,'10k',0]
+#     bike  = ["Bike", "45min",0,0,'45min',0,0,0]
+#     strength = ["Strength", 0,"Chest and Tris","Back and Bis",0,0,0,"Legs"]
+#     plans = [swim, run, bike, strength]
 
-    if (request.method == "POST"):
-        # id = request.form['id']
-        name = request.form['name']
-        type = request.form['type']
-        sport_type = request.form['sport_type']
-        start_date_local = request.form['start_date_local']
-        elapsed_time = request.form['elapsed_time']
-        description = request.form['description']
-        distance = request.form['distance']
+#     if (request.method == "POST"):
+#         # id = request.form['id']
+#         name = request.form['name']
+#         type = request.form['type']
+#         sport_type = request.form['sport_type']
+#         start_date_local = request.form['start_date_local']
+#         elapsed_time = request.form['elapsed_time']
+#         description = request.form['description']
+#         distance = request.form['distance']
 
 
-        new_activity = Activity(name="Interval Run", type=type, sport_type="run", start_date_local=date.today(), elapsed_time="1200", description="1 on 2 off", distance="5000")
-        #new_activity = Activity(name=name, type=type, sport_type=type, start_date_local=start_date_local, elapsed_time=elapsed_time, description=description, distance=distance)
-        try:
-            db.session.add(new_activity)
-            db.session.commit()
-            return redirect('/plan')
-        except:
-            return "Error adding activity"
-    else: 
-        activities = Activity.query.order_by(Activity.start_date_local)
-        return render_template("plan.html", plans=plans, activities=activities)
+#         new_activity = Activity(name="Interval Run", type=type, sport_type="run", start_date_local=date.today(), elapsed_time="1200", description="1 on 2 off", distance="5000")
+#         #new_activity = Activity(name=name, type=type, sport_type=type, start_date_local=start_date_local, elapsed_time=elapsed_time, description=description, distance=distance)
+#         try:
+#             db.session.add(new_activity)
+#             db.session.commit()
+#             return redirect('/plan')
+#         except:
+#             return "Error adding activity"
+#     else: 
+#         activities = Activity.query.order_by(Activity.start_date_local)
+#         return render_template("plan.html", plans=plans, activities=activities)
 
 
 @app.route("/chat", methods=["POST"])
@@ -141,7 +152,7 @@ def stream():
 @app.route("/reset", methods=["POST"])
 def reset_chat():
     global chat_history
-    chat_history = [{"role": "system", "content": "You are a personal trainer."}]
+    chat_history = [{"role": "system", "content": "You are Lionel Sanders, famous triathalete, helping here as a personal trainer."}]
     return jsonify(success=True)
 
 # Models

@@ -15,6 +15,18 @@ payload={
         'f': 'json'
 }
 
+def getStravaActivites(id):
+    res = requests.post(auth_url, data=payload, verify=False)
+    access_token = res.json()['access_token']
+
+    header = {'Authorization': 'Bearer ' + access_token}
+    param = {'id': id, 'includeAllEfforts': False}
+    activities_url = "https://www.strava.com/api/v3/activities/"+str(id)+"?access_token="
+
+    my_dataset = requests.get(activities_url, headers=header, params=param).json()
+
+    return my_dataset
+
 def getStravaData(days):
     res = requests.post(auth_url, data=payload, verify=False)
     access_token = res.json()['access_token']
@@ -32,7 +44,9 @@ def getStravaData(days):
             summary = {
                 "Activity":str(d['sport_type']), 
                 "Date":str(d['start_date']), #str(date.strftime("%m/%d, %H:%M"))
-                "Description":str(d['name']), 
+                "Time":str(round(d['elapsed_time']/60)),
+                "Name":str(d['name']), 
+                "id":str(d['id']), 
                 "Distance (KM)":str(round(d['distance']/1000,2))
             }
             activity_list.append(summary)

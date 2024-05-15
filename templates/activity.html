@@ -12,51 +12,23 @@
 
     <div class="main-content">
       <div class="training-log-container" >
-        <!-- <div class="header">
-          <div class="demo-text">Current Training Block (This Week)</div>
-        </div>
-        <table id="strava-data" class="table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Activity</th>
-              <th>Description</th>
-              <th>Distance (KM)</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for p in plans %}
-              <tr>
-                <td>{{ p.Date }}</td>
-                <td>{{ p.Activity }}</td>
-                <td>{{ p.Description }}</td>
-                <td>{{ p['Distance (KM)'] }}</td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table> -->
         <div class="header">
-          <div class="demo-text">Strava Results (Previous 2 Weeks)
+          <div class="demo-text">Strava Activity
           </div>
         </div>
         <table id="strava-data" class="table">
           <thead>
             <tr>
-              <th>Date</th>
-              <th>Activity</th>
-              <th>Name</th>
-              <th>Distance (KM)</th>
-              <th>Time (min)</th>
+              <th>Field</th>
+              <th>Value</th>
             </tr>
           </thead>
           <tbody>
-            {% for activity in activities %}
+            {% for field, value in activity.items() %}
               <tr>
-                <td>{{ activity.Date }}</td>
-                <td><a href="/activities/{{ activity.id }}">{{ activity.Activity }}</a></td>
-                <td><a href="https://www.strava.com/activities/{{ activity.id }}">{{ activity.Name }}</a></td>
-                <td>{{ activity['Distance (KM)'] }}</td>
-                <td>{{ activity['Time'] }}</td>
+                <td>{{ field }}</td>
+                <td>{{ value| string() | truncate(150) }}</td>
+               
               </tr>
             {% endfor %}
           </tbody>
