@@ -59,6 +59,7 @@ def index():
 @app.route("/signup", methods=["GET"])
 def sign_up():
     OAuthURL = "http://www.strava.com/oauth/authorize?client_id="+ os.getenv('CLIENT_ID') + "&response_type=code&redirect_uri=" + os.getenv('REDIRECT_URL') + "/exchange_token&approval_prompt=force&scope=read,activity:read_all"
+    print(OAuthURL)
     return redirect(OAuthURL)
 
 @app.route("/exchange_token")
