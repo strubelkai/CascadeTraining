@@ -16,7 +16,6 @@ payload={
 }
 
 def getRefreshToken(code):
-
     url = "https://www.strava.com/oauth/token"
     payload={
         'client_id': os.getenv('CLIENT_ID'),
@@ -26,8 +25,6 @@ def getRefreshToken(code):
         'f': 'json'
     }
     res = requests.post(url, data=payload, verify=False)
-    print(res.json())
-    access_token = res.json()['access_token']
     refresh_token = res.json()['refresh_token']
     return refresh_token
 
@@ -50,7 +47,6 @@ def getStravaData(days):
     header = {'Authorization': 'Bearer ' + access_token}
     param = {'per_page': 200, 'page': 1}
     my_dataset = requests.get(activities_url, headers=header, params=param).json()
-    print(my_dataset)
     activity_list = []
     for d in my_dataset:
         date = datetime.fromisoformat(

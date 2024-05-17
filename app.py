@@ -54,7 +54,8 @@ def sign_up():
 @app.route("/exchange_token")
 def exchange_token():
     code = request.args.get('code')
-    return strava_api.getRefreshToken(code)
+    refreshCode =  strava_api.getRefreshToken(code)
+    return refreshCode
    
 
 @app.route("/activities/<int:activity_id>", methods=["GET"])
