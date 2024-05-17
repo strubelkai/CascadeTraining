@@ -203,3 +203,5 @@ class Activity(db.Model):
     def __repr__(self):
         return f"Name : {self.name}, Description: {self.description}"
     
+if __name__ == '__main__':
+    app.run()
