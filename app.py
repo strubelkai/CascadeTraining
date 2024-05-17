@@ -18,11 +18,9 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
+
 client = openai.OpenAI()
-strava_data = strava_api.getStravaData(14)
-#print(strava_data)
-#str(date.strftime("%m/%d, %H:%M"))
-plans = planner.getPlans()
+
 
 app = Flask(__name__)
 # adding configuration for using a sqlite database
@@ -38,24 +36,36 @@ with app.app_context():
 
 chat_history = [
     {"role": "system", "content": "Hey there, I'm Lionel Sanders. You might know me as a professional triathlete, but today, I'm here to be your coach, your mentor, and your biggest supporter. I've been through the trenches, battled my demons, and come out on top, and now, I'm here to share everything I've learned with you."},
-    # {"role": "system", "content": str("Here's your current training block: "+str(plans))},
-    {"role": "system", "content": str("Here's your training log for the last two weeks: "+str(strava_data))},  
 ]
+
+@app.route("/coach", methods=["GET"])
+def coach():
+    strava_data = strava_api.getStravaData(14)
+    chat_history = [
+        {"role": "system", "content": "Hey there, I'm Lionel Sanders. You might know me as a professional triathlete, but today, I'm here to be your coach, your mentor, and your biggest supporter. I've been through the trenches, battled my demons, and come out on top, and now, I'm here to share everything I've learned with you."},
+        # {"role": "system", "content": str("Here's your current training block: "+str(plans))},
+        {"role": "system", "content": str("Here's your training log for the last two weeks: "+str(strava_data))},  
+    ]
+    #print(strava_data)
+    #str(date.strftime("%m/%d, %H:%M"))
+    plans = planner.getPlans()
+    return render_template("coach.html", chat_history=chat_history, activities=strava_data, plans=plans)
+
 
 @app.route("/", methods=["GET"])
 def index():
-    return render_template("index.html", chat_history=chat_history, activities=strava_data, plans=plans)
+    return render_template("index.html")
 
 @app.route("/signup", methods=["GET"])
 def sign_up():
-    OAuthURL = "http://www.strava.com/oauth/authorize?client_id="+ os.getenv('CLIENT_ID') + "&response_type=code&redirect_uri=http://127.0.0.1:5000/exchange_token&approval_prompt=force&scope=read,activity:read_all"
+    OAuthURL = "http://www.strava.com/oauth/authorize?client_id="+ os.getenv('CLIENT_ID') + "&response_type=code&redirect_uri=" + os.getenv('REDIRECT_URL') + "/exchange_token&approval_prompt=force&scope=read,activity:read_all"
     return redirect(OAuthURL)
 
 @app.route("/exchange_token")
 def exchange_token():
     code = request.args.get('code')
     refreshCode =  strava_api.getRefreshToken(code)
-    return refreshCode
+    return redirect("/coach")
    
 
 @app.route("/activities/<int:activity_id>", methods=["GET"])
@@ -170,38 +180,38 @@ def reset_chat():
     chat_history = [{"role": "system", "content": "You are Lionel Sanders, famous triathalete, helping here as a personal trainer."}]
     return jsonify(success=True)
 
-# Models
-class Activity(db.Model):
-    # Id : Field which stores unique id for every row in 
-    # database table.
-    # -- name
-    # -- required String, in form	The name of the activity.
-    # -- type
-    # -- String, in form	Type of activity. For example - Run, Ride etc.
-    # -- sport_type
-    # -- required String, in form	Sport type of activity. For example - Run, MountainBikeRide, Ride, etc.
-    # -- start_date_local
-    # -- required Date, in form	ISO 8601 formatted date time.
-    # -- elapsed_time
-    # -- required Integer, in form	In seconds.
-    # -- description
-    # -- String, in form	Description of the activity.
-    # -- distance
-    # -- Float, in form	In meters.
+# # Models
+# class Activity(db.Model):
+#     # Id : Field which stores unique id for every row in 
+#     # database table.
+#     # -- name
+#     # -- required String, in form	The name of the activity.
+#     # -- type
+#     # -- String, in form	Type of activity. For example - Run, Ride etc.
+#     # -- sport_type
+#     # -- required String, in form	Sport type of activity. For example - Run, MountainBikeRide, Ride, etc.
+#     # -- start_date_local
+#     # -- required Date, in form	ISO 8601 formatted date time.
+#     # -- elapsed_time
+#     # -- required Integer, in form	In seconds.
+#     # -- description
+#     # -- String, in form	Description of the activity.
+#     # -- distance
+#     # -- Float, in form	In meters.
 
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200), unique=False, nullable=False)
-    type = db.Column(db.String(20), unique=False, nullable=False)
-    sport_type = db.Column(db.String(20), unique=False, nullable=False)
-    start_date_local = db.Column(db.Date, unique=False, nullable=False)
-    elapsed_time = db.Column(db.Integer, nullable=False)
-    description = db.Column(db.String(200), unique=False, nullable=False)
-    distance = db.Column(db.Float, unique=False, nullable=False)
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String(200), unique=False, nullable=False)
+#     type = db.Column(db.String(20), unique=False, nullable=False)
+#     sport_type = db.Column(db.String(20), unique=False, nullable=False)
+#     start_date_local = db.Column(db.Date, unique=False, nullable=False)
+#     elapsed_time = db.Column(db.Integer, nullable=False)
+#     description = db.Column(db.String(200), unique=False, nullable=False)
+#     distance = db.Column(db.Float, unique=False, nullable=False)
  
-    # repr method represents how one object of this datatable
-    # will look like
-    def __repr__(self):
-        return f"Name : {self.name}, Description: {self.description}"
+#     # repr method represents how one object of this datatable
+#     # will look like
+#     def __repr__(self):
+#         return f"Name : {self.name}, Description: {self.description}"
     
 if __name__ == '__main__':
     app.run()

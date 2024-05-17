@@ -4,16 +4,11 @@ from datetime import datetime, time, date, timezone, timedelta
 from dotenv import load_dotenv
 load_dotenv()
 
+global refresh_token
+
 auth_url="https://www.strava.com/oauth/token"
 activities_url = "https://www.strava.com/api/v3/athlete/activities?access_token="
 
-payload={
-        'client_id': os.getenv('CLIENT_ID'),
-        'client_secret': os.getenv('CLIENT_SECRET'),
-        'refresh_token': os.getenv('REFRESH_TOKEN'),
-        'grant_type': 'refresh_token',
-        'f': 'json'
-}
 
 def getRefreshToken(code):
     url = "https://www.strava.com/oauth/token"
@@ -25,10 +20,18 @@ def getRefreshToken(code):
         'f': 'json'
     }
     res = requests.post(url, data=payload, verify=False)
+    global refresh_token
     refresh_token = res.json()['refresh_token']
     return refresh_token
 
 def getStravaActivites(id):
+    payload={
+        'client_id': os.getenv('CLIENT_ID'),
+        'client_secret': os.getenv('CLIENT_SECRET'),
+        'refresh_token': refresh_token, #os.getenv('REFRESH_TOKEN'),
+        'grant_type': 'refresh_token',
+        'f': 'json'
+    }
     res = requests.post(auth_url, data=payload, verify=False)
     access_token = res.json()['access_token']
 
@@ -41,6 +44,13 @@ def getStravaActivites(id):
     return my_dataset
 
 def getStravaData(days):
+    payload={
+        'client_id': os.getenv('CLIENT_ID'),
+        'client_secret': os.getenv('CLIENT_SECRET'),
+        'refresh_token': refresh_token, #os.getenv('REFRESH_TOKEN'),
+        'grant_type': 'refresh_token',
+        'f': 'json'
+    }
     res = requests.post(auth_url, data=payload, verify=False)
     access_token = res.json()['access_token']
 
