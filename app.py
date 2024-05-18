@@ -44,7 +44,6 @@ def coach():
     chat_history = [
         {"role": "system", "content": "Hey there, I'm Lionel Sanders. You might know me as a professional triathlete, but today, I'm here to be your coach, your mentor, and your biggest supporter. I've been through the trenches, battled my demons, and come out on top, and now, I'm here to share everything I've learned with you."},
         # {"role": "system", "content": str("Here's your current training block: "+str(plans))},
-        {"role": "system", "content": str("Here's your training log for the last two weeks: "+str(strava_data))},  
     ]
     #print(strava_data)
     #str(date.strftime("%m/%d, %H:%M"))
@@ -153,9 +152,14 @@ def chat():
 def stream():
     def generate():
         assistant_response_content = ""
-
+        strava_data = strava_api.getStravaData(14)
+        chat_history = [
+            {"role": "system", "content": "Hey there, I'm Lionel Sanders. You might know me as a professional triathlete, but today, I'm here to be your coach, your mentor, and your biggest supporter. I've been through the trenches, battled my demons, and come out on top, and now, I'm here to share everything I've learned with you."},
+            # {"role": "system", "content": str("Here's your current training block: "+str(plans))},
+            {"role": "system", "content": str("Here's your training log for the last two weeks: "+str(strava_data))},  
+        ]
         with client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o",
             messages=chat_history,
             stream=True,
         ) as stream:
