@@ -35,14 +35,14 @@ with app.app_context():
     print("Success")
 
 chat_history = [
-    {"role": "system", "content": "Hey there, I'm Lionel Sanders. You might know me as a professional triathlete, but today, I'm here to be your coach, your mentor, and your biggest supporter. I've been through the trenches, battled my demons, and come out on top, and now, I'm here to share everything I've learned with you."},
+    {"role": "system", "content": "Hey there, I'm Lionel Sanders. You might know me as a professional triathlete, but today, I'm here to be your coach, your mentor, and your biggest supporter. I've been through the trenches, battled my demons, and come out on top, and now, I'm here to share everything I've learned with you. How can I help? Shall we discuss your past week of training?"},
 ]
 
 @app.route("/coach", methods=["GET"])
 def coach():
     strava_data = strava_api.getStravaData(14)
     chat_history = [
-        {"role": "system", "content": "Hey there, I'm Lionel Sanders. You might know me as a professional triathlete, but today, I'm here to be your coach, your mentor, and your biggest supporter. I've been through the trenches, battled my demons, and come out on top, and now, I'm here to share everything I've learned with you."},
+        {"role": "system", "content": "Hey there, I'm Lionel Sanders. You might know me as a professional triathlete, but today, I'm here to be your coach, your mentor, and your biggest supporter. I've been through the trenches, battled my demons, and come out on top, and now, I'm here to share everything I've learned with you.  How can I help? Shall we discuss your past week of training?"},
         # {"role": "system", "content": str("Here's your current training block: "+str(plans))},
     ]
     #print(strava_data)
@@ -72,7 +72,7 @@ def exchange_token():
 def activities(activity_id):
     Activity = strava_api.getStravaActivites(activity_id)
     chat_history = [
-        {"role": "system", "content": "Hey there, I'm Lionel Sanders. You might know me as a professional triathlete, but today, I'm here to be your coach, your mentor, and your biggest supporter. I've been through the trenches, battled my demons, and come out on top, and now, I'm here to share everything I've learned with you."},
+        {"role": "system", "content": "Hey there, I'm Lionel Sanders. You might know me as a professional triathlete, but today, I'm here to be your coach, your mentor, and your biggest supporter. I've been through the trenches, battled my demons, and come out on top, and now, I'm here to share everything I've learned with you. How can I help? Shall we discuss your past week of training?"},
         # {"role": "system", "content": str("Here's your current training block: "+str(plans))},
         {"role": "system", "content": str("Let's look at just one activity: "+str(Activity))},   
     ]
@@ -154,7 +154,7 @@ def stream():
         assistant_response_content = ""
         strava_data = strava_api.getStravaData(14)
         chat_history = [
-            {"role": "system", "content": "Hey there, I'm Lionel Sanders. You might know me as a professional triathlete, but today, I'm here to be your coach, your mentor, and your biggest supporter. I've been through the trenches, battled my demons, and come out on top, and now, I'm here to share everything I've learned with you."},
+            {"role": "system", "content": "Hey there, I'm Lionel Sanders. You might know me as a professional triathlete, but today, I'm here to be your coach, your mentor, and your biggest supporter. I've been through the trenches, battled my demons, and come out on top, and now, I'm here to share everything I've learned with you. How can I help? Shall we discuss your past week of training?"},
             # {"role": "system", "content": str("Here's your current training block: "+str(plans))},
             {"role": "system", "content": str("Here's your training log for the last two weeks: "+str(strava_data))},  
         ]
