@@ -54,7 +54,7 @@ def coach():
 
 @app.route("/", methods=["GET"])
 def index():
-    return render_template("index.html")
+    return render_template("index.html", hidenav=True)
 
 @app.route("/signup", methods=["GET"])
 def sign_up():

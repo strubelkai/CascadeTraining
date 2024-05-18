@@ -9,6 +9,8 @@
      {% endblock %}
   </head>
   <body>
+    {% if hidenav %}
+    {% else %}
     <nav class="navbar">
         <div id="container-fluid justify-content-center">
             <ul class="nav justify-content-center">
@@ -24,6 +26,7 @@
             </ul>
         </div>
     </nav>
+    {% endif %}
     <div id="content">{% block content %}{% endblock %}</div>
   </body>
 </html>
