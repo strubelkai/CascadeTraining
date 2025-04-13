@@ -1,33 +1,104 @@
 {% extends "base.html" %}
 {% block title %}Training Log{% endblock %}
 {% block head %}
-<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
-    <script>
-
-      document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-          themeSystem: 'bootstrap5',
-          initialView: 'dayGridMonth',
-          events: {
-				url: 'data',
-				error: function() {
-					$('#script-warning').show();
-				}
-			},
-        });
-        calendar.render();
-      });
-
-    </script>
-  {{ super() }}
-  <style type="text/css">
-    .important { color: #336699; }
-  </style>
+{{ super() }}
+<!-- FullCalendar CSS -->
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/main.min.css' rel='stylesheet' />
+<style>
+    .calendar-container {
+        padding: 2rem;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-top: 2rem;
+        min-height: 800px;
+    }
+    
+    #calendar {
+        height: 100%;
+        min-height: 600px;
+    }
+    
+    .fc-event {
+        cursor: pointer;
+        padding: 2px 4px;
+    }
+    
+    .fc-event-title {
+        font-weight: 500;
+        font-size: 0.9em;
+    }
+    
+    .fc-event.Running {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+    
+    .fc-event.Cycling {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+    
+    .fc-event.Swimming {
+        background-color: #17a2b8;
+        border-color: #17a2b8;
+    }
+</style>
+<!-- FullCalendar JS -->
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/main.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/locales-all.min.js'></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Initializing calendar...');
+    var calendarEl = document.getElementById('calendar');
+    if (!calendarEl) {
+        console.error('Calendar element not found!');
+        return;
+    }
+    
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        themeSystem: 'bootstrap5',
+        initialView: 'dayGridMonth',
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        height: 'auto',
+        contentHeight: 'auto',
+        events: {
+            url: '/data',
+            method: 'GET',
+            failure: function(error) {
+                console.error('Error fetching events:', error);
+                alert('There was an error while fetching events! Check the console for details.');
+            },
+            success: function(response) {
+                console.log('Successfully fetched events:', response);
+            }
+        },
+        eventClick: function(info) {
+            window.location.href = '/activities/' + info.event.id;
+        },
+        eventDidMount: function(info) {
+            console.log('Event mounted:', info.event);
+            info.el.classList.add(info.event.extendedProps.type);
+        }
+    });
+    
+    calendar.render();
+    console.log('Calendar rendered');
+});
+</script>
 {% endblock %}
 {% block content %}
-
-<div class="container">
-   <div id='calendar'></div>
+<div class="container-fluid py-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="calendar-container">
+                <div id='calendar'></div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
